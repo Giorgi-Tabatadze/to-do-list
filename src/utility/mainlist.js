@@ -1,5 +1,6 @@
 import { pubsub } from "./pubsub";
 import removeAllChildNodes from "./removeallchildnodes";
+import todoData from "../tododata";
 
 const mainList = {
   parent: null,
@@ -12,6 +13,7 @@ const mainList = {
     mainList.parent = listContainer;
 
     pubsub.subscribe("todoAdded", mainList.renderList);
+    pubsub.subscribe("todoEdited", mainList.renderList);
   },
 
   renderList: (list) => {
@@ -23,11 +25,13 @@ const mainList = {
     list.forEach(todo => {
       const todoLi = document.createElement("li");
       todoLi.classList.add("todo")
+      todoLi.dataset.index = list.indexOf(todo);
 
       const check = document.createElement("input");
       check.classList.add("todo-check")
       check.setAttribute("type", "checkbox");
       check.checked = todo.completed;
+      check.addEventListener("change", mainList.handleCheck);
       todoLi.appendChild(check)
 
       const title = document.createElement("p");
@@ -57,10 +61,19 @@ const mainList = {
 
 
       listUl.appendChild(todoLi);
+
     });
+  },
 
+  handleCheck: (e) => {
+    console.log("received")
+    const info = {
+      index : e.target.parentNode.dataset.index,
+      value: e.target.checked,
+    }
+
+    pubsub.publish("checkChanged", info)
   }
-
 }
 
 export default mainList;
