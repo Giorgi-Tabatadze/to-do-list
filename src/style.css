@@ -1,0 +1,15 @@
+.todo {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+
+.taskform {
+  position: absolute;
+  top: 200px;
+  left: 400px;
+  display: flex;
+  align-items: center;
+  background-color: gray;
+  color: white;
+}

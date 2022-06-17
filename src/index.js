@@ -1,3 +1,4 @@
+import "./style.css"
 import topUi from "./utility/ui";
 import todoData from "./tododata";
 import mainList from "./utility/mainlist";
@@ -18,7 +19,7 @@ const domStuff = (() => {
   content.appendChild(main);
 
   topUi.render(header);
-  mainList.setParent(main);
+  mainList.renderContainer(main);
 })();
 
 
