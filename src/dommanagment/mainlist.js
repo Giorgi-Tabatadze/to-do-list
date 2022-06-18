@@ -6,6 +6,7 @@ import topUi from "./ui";
 
 const mainList = {
   parent: null,
+  detailsRendered: false,
 
   renderContainer: (container) => {    
     const listContainer = document.createElement("div");
@@ -37,6 +38,10 @@ const mainList = {
         topUi.addForm(todoInfo);
       };
 
+      const handleDetails = (e) =>{
+        mainList.renderDetails(todo);
+      }
+
       const todoLi = document.createElement("li");
       todoLi.classList.add("todo")
       todoLi.dataset.index = list.indexOf(todo);
@@ -66,6 +71,7 @@ const mainList = {
       detailsBtn.classList.add("todo-details");
       detailsBtn.innerText = "Details";
       todoLi.appendChild(detailsBtn);
+      detailsBtn.addEventListener("click", handleDetails);
 
       const date = document.createElement("p");
       date.classList.add("todo-date");
@@ -93,6 +99,63 @@ const mainList = {
 
     pubsub.publish("checkChanged", info)
   },
+
+  renderDetails: (todo) => {
+    mainList.detailsRendered = true;
+
+    const detailsContainer = document.createElement("div");
+    detailsContainer.classList.add("details-container")
+    if (todo.completed){
+      detailsContainer.classList.add("completed")
+    };
+
+    const completed = document.createElement("p");
+
+
+    if (todo.completed) {
+      completed.innerText = "Completed"
+    }
+    else {
+      completed.innerText = "Not Completed"
+    }
+    detailsContainer.appendChild(completed)
+
+    const title = document.createElement("p");
+    title.classList.add("details-title");
+    title.innerText = `Title: ${todo.title}`;
+    detailsContainer.appendChild(title);
+
+    const description = document.createElement("p");
+    description.classList.add("details-text");
+    description.innerText = `Description: ${todo.description}`;
+    detailsContainer.appendChild(description);
+
+    const priority = document.createElement("p");
+    priority.classList.add("details-priority"); 
+    priority.innerText = `Priority: ${todo.priority}`
+    detailsContainer.appendChild(priority);
+
+    const date = document.createElement("p");
+    date.classList.add("details-date");
+    date.innerText = `Date: ${todo.date}`;
+    detailsContainer.appendChild(date);
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.innerText = "X";
+    cancelBtn.addEventListener("click", () => {
+      mainList.removeDetails(detailsContainer);
+      console.log("Details removed");
+    })
+    detailsContainer.appendChild(cancelBtn)
+    
+
+    mainList.parent.appendChild(detailsContainer);
+  },
+
+  removeDetails: (details) =>{
+    mainList.parent.removeChild(details);
+    mainList.detailsRendered = false;
+  }
 
 }
 
