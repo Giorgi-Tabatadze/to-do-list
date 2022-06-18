@@ -1,5 +1,5 @@
-import { pubsub } from "./pubsub";
-import removeAllChildNodes from "./removeallchildnodes";
+import { pubsub } from "../utility/pubsub";
+import removeAllChildNodes from "../utility/removeallchildnodes";
 import todoData from "../tododata";
 import addTaskForm from "./taskform";
 import topUi from "./ui";

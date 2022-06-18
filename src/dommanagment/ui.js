@@ -1,6 +1,6 @@
+import removeAllChildNodes from "../utility/removeallchildnodes";
+import { pubsub } from "../utility/pubsub";
 import addTaskForm from "./taskform";
-import { pubsub } from "./pubsub";
-import removeAllChildNodes from "./removeallchildnodes";
 
 const topUi = {
   //cache container

@@ -1,6 +1,6 @@
-import { pubsub } from "./pubsub";
+import { pubsub } from "../utility/pubsub";
 import todoData from "../tododata";
-import createObject from "./objectfactory";
+import createObject from "../utility/objectfactory";
 
 const addTaskForm = {
   render: (container, prefilledInfo) => {
@@ -79,6 +79,12 @@ const addTaskForm = {
     const submitBtn = document.createElement("button");
     submitBtn.innerText = "Submit";
 
+    //cancel
+    const cancelBtn = document.createElement("button")
+    cancelBtn.setAttribute("type", "button");
+    cancelBtn.innerText = "X"
+    cancelBtn.addEventListener("click", handleCancel);
+    
 
     //append to form
     form.appendChild(titleDiv);
@@ -86,6 +92,8 @@ const addTaskForm = {
     form.appendChild(dateDiv);
     form.appendChild(priorityDiv);
     form.appendChild(submitBtn);
+    form.appendChild(cancelBtn);
+
 
 
     function handleSubmit(event) { 
@@ -113,6 +121,10 @@ const addTaskForm = {
       prefilledInfo.todoObj.priority = prioritySelect.value;
 
       pubsub.publish("todoEditRequested", prefilledInfo)
+    }
+
+    function handleCancel () {
+      pubsub.publish("formUsed", form);
     }
 
     if (prefilledInfo){

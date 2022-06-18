@@ -1,7 +1,7 @@
 import "./style.css"
-import topUi from "./utility/ui";
 import todoData from "./tododata";
-import mainList from "./utility/mainlist";
+import mainList from "./dommanagment/mainlist";
+import topUi from "./dommanagment/ui";
 
 
 
