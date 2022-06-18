@@ -3,7 +3,7 @@ import todoData from "../tododata";
 import createObject from "./objectfactory";
 
 const addTaskForm = {
-  render: (container) => {
+  render: (container, prefilledInfo) => {
     const form = document.createElement("form");
     form.classList.add("taskform");
 
@@ -88,20 +88,45 @@ const addTaskForm = {
     form.appendChild(submitBtn);
 
 
-    function handleForm(event) { 
+    function handleSubmit(event) { 
       event.preventDefault(); 
+      pubsub.publish("formUsed", form)
+
       const title = titleInput.value;
       const description = descriptionInput.value;
       const date = dateInput.value;
       const priority = prioritySelect.value;
 
-      pubsub.publish("formUsed", form)
       const todo = createObject.todo(title, description, date, priority);
       todoData.addTodo(todo);
 
     };
-    form.addEventListener('submit', handleForm);
-    
+
+    function handleEdit(event) {
+      event.preventDefault(); 
+      pubsub.publish("formUsed", form);
+      console.log(prefilledInfo);
+
+      prefilledInfo.todoObj.title = titleInput.value;
+      prefilledInfo.todoObj.description = descriptionInput.value;
+      prefilledInfo.todoObj.date = dateInput.value;
+      prefilledInfo.todoObj.priority = prioritySelect.value;
+
+      pubsub.publish("todoEditRequested", prefilledInfo)
+    }
+
+    if (prefilledInfo){
+      titleInput.value = prefilledInfo.todoObj.title;
+      descriptionInput.value = prefilledInfo.todoObj.description;
+      dateInput.value = prefilledInfo.todoObj.date;
+      prioritySelect.value = prefilledInfo.todoObj.priority;
+
+      form.addEventListener("submit", handleEdit);
+    }
+    else {
+    form.addEventListener('submit', handleSubmit);
+    };
+
     container.appendChild(form);
   }
 }

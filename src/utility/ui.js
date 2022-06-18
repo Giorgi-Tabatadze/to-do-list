@@ -20,9 +20,15 @@ const topUi = {
     pubsub.subscribe("formUsed", topUi.removeForm);
   },
 
-  addForm: () => {
+  addForm: (prefilled) => {
   if (!topUi.formGenerated) {
-    addTaskForm.render(topUi.parent);
+    console.log(prefilled);
+    if (prefilled.type !== "click"){
+    addTaskForm.render(topUi.parent, prefilled);
+    }
+    else{
+    addTaskForm.render(topUi.parent, false);
+    };
     topUi.formGenerated = true;
    }
   },

@@ -1,6 +1,8 @@
 import { pubsub } from "./pubsub";
 import removeAllChildNodes from "./removeallchildnodes";
 import todoData from "../tododata";
+import addTaskForm from "./taskform";
+import topUi from "./ui";
 
 const mainList = {
   parent: null,
@@ -22,10 +24,26 @@ const mainList = {
     const listUl = document.createElement("ul");
     mainList.parent.appendChild(listUl);
 
+    
+
     list.forEach(todo => {
+
+      const handleEdit = (e) => {
+        console.log(todo);
+        const todoInfo = {
+          index: list.indexOf(todo),
+          todoObj: todo
+        }
+        topUi.addForm(todoInfo);
+      };
+
       const todoLi = document.createElement("li");
       todoLi.classList.add("todo")
       todoLi.dataset.index = list.indexOf(todo);
+      if (todo.completed) {
+        console.log("completed")
+        todoLi.classList.add("todo-completed")
+      };
 
       const check = document.createElement("input");
       check.classList.add("todo-check")
@@ -58,6 +76,7 @@ const mainList = {
       editBtn.classList.add("todo-edit");
       editBtn.innerText = "Edit";
       todoLi.appendChild(editBtn);
+      editBtn.addEventListener("click", handleEdit)
 
 
       listUl.appendChild(todoLi);
@@ -73,7 +92,8 @@ const mainList = {
     }
 
     pubsub.publish("checkChanged", info)
-  }
+  },
+
 }
 
 export default mainList;
