@@ -16,7 +16,10 @@ const mainList = {
     mainList.parent = listContainer;
 
     pubsub.subscribe("todoAdded", mainList.renderList);
+    pubsub.subscribe("todoAdded", mainList.removeDetails);
     pubsub.subscribe("todoEdited", mainList.renderList);
+    pubsub.subscribe("todoEdited", mainList.removeDetails);
+
   },
 
   renderList: (list) => {
@@ -101,8 +104,7 @@ const mainList = {
   },
 
   renderDetails: (todo) => {
-    mainList.detailsRendered = true;
-
+    if (!mainList.detailsRendered){
     const detailsContainer = document.createElement("div");
     detailsContainer.classList.add("details-container")
     if (todo.completed){
@@ -150,9 +152,16 @@ const mainList = {
     
 
     mainList.parent.appendChild(detailsContainer);
+
+    mainList.detailsRendered = true;
+  }
   },
 
   removeDetails: (details) =>{
+    if (Array.isArray(details)){
+      mainList.detailsRendered = false;
+      return
+    };
     mainList.parent.removeChild(details);
     mainList.detailsRendered = false;
   }
