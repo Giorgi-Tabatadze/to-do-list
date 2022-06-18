@@ -1,7 +1,8 @@
 const createObject = {
   todo: (title, description, date, priority) => {
     let completed = false;
-    return{title, description, date, priority, completed};
+    let project = "general";
+    return{title, description, date, priority, completed, project};
   },
 }
 

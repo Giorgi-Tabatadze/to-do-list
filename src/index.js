@@ -2,6 +2,7 @@ import "./style.css"
 import todoData from "./tododata";
 import mainList from "./dommanagment/mainlist";
 import topUi from "./dommanagment/ui";
+import sidebar from "./dommanagment/sidebar";
 
 
 
@@ -20,6 +21,7 @@ const domStuff = (() => {
 
   topUi.render(header);
   mainList.renderContainer(main);
+  sidebar.render(aside);
 })();
 
 

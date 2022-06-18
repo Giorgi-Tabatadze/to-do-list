@@ -2,7 +2,7 @@ import { pubsub } from "./utility/pubsub";
 
 const todoData = {
   list: [],
-  projects: [],
+  projects: ["general",],
 
   addTodo: (toDo) => {
     todoData.list.push(toDo);
@@ -24,10 +24,16 @@ const todoData = {
     pubsub.publish("todoEdited", todoData.list);
   },
 
+  addProject: (project) => {
+    console.log(project);
+    todoData.projects.push(project);
+    pubsub.publish("projectAdded", todoData.projects);
+  }
 
 };
 
 pubsub.subscribe("checkChanged", todoData.checkUncheck);
 pubsub.subscribe("todoEditRequested", todoData.editTodo);
+pubsub.subscribe("projectAddRequested", todoData.addProject);
 
 export default todoData;
