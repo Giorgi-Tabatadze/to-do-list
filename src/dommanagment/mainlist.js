@@ -15,11 +15,9 @@ const mainList = {
     container.appendChild(listContainer);
     mainList.parent = listContainer;
 
-    pubsub.subscribe("todoAdded", mainList.renderList);
-    pubsub.subscribe("todoAdded", mainList.removeDetails);
-    pubsub.subscribe("todoEdited", mainList.renderList);
-    pubsub.subscribe("todoEdited", mainList.removeDetails);
-
+    pubsub.subscribe("todoListEdited", mainList.renderList);
+    pubsub.subscribe("todoListEdited", mainList.removeDetails);
+  
   },
 
   renderList: (list) => {

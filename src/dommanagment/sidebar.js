@@ -9,13 +9,10 @@ const sidebar = {
 
   render: (container) => {
     sidebar.parent = container;
-
     sidebar.projectsParent = document.createElement("div");
-
     container.appendChild(sidebar.projectsParent)
 
     sidebar.renderProjects(todoData.projects);
-
 
     pubsub.subscribe("projectAdded", sidebar.renderProjects)
     
@@ -25,10 +22,11 @@ const sidebar = {
     removeAllChildNodes(sidebar.projectsParent);
 
     const navUl = document.createElement("ul");
+    navUl.classList.add("projects-nav")
     sidebar.projectsParent.appendChild(navUl);
 
     projects.forEach(project => {
-      const li = document.createElement("li")
+      const li = document.createElement("button")
       li.innerText = project;
       navUl.appendChild(li);
     });
