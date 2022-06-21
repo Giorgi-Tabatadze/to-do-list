@@ -22,7 +22,6 @@ const topUi = {
 
   addForm: (prefilled) => {
   if (!topUi.formGenerated) {
-    console.log(prefilled);
     if (prefilled.type !== "click"){
     addTaskForm.render(topUi.parent, prefilled);
     }

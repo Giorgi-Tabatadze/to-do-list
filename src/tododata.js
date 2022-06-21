@@ -7,6 +7,7 @@ const todoData = {
 
   addTodo: (toDo) => {
     toDo.project = todoData.projects[todoData.currentProjectIndex];
+    toDo.id = todoData.list.length + 1;
     todoData.list.push(toDo);
     todoData.filterList();
   },
@@ -16,13 +17,24 @@ const todoData = {
   },
 
   checkUncheck: (info) => {
-    console.log(todoData.list[info[0]])
-    todoData.list[info.index].completed = info.value;
+    todoData.list.forEach(todo => {
+      console.log(todo);
+      console.log(info);
+      if (todo.id == info.index) {
+        todo.completed = info.value;
+      }
+    });
     todoData.filterList();
   },
 
   editTodo: (info) => {
-    todoData[info.index] = info.todoObj;
+    todoData.list.forEach(todo => {
+      console.log(todo);
+      console.log(info);
+      if (todo.id == info.todoObj.index) {
+        todo = nfo.todoObj;
+      }
+    });
     todoData.filterList();
   },
 
@@ -34,17 +46,19 @@ const todoData = {
 
   setCurrentProject: (index) => {
     todoData.currentProjectIndex = index;
+    console.log(todoData.currentProjectIndex)
     todoData.filterList();
   },
 
   filterList: () => {
-    let listToSend = [];
-    if (todoData.currentProjectIndex === 0) {
+    if (todoData.currentProjectIndex == 0) {
       pubsub.publish("todoListEdited", todoData.list);
     }
     else {
+    let listToSend = [];
     todoData.list.forEach(todo => {
-      if (todo.project = todoData.projects[todoData.currentProjectIndex]) {
+      if (todo.project === todoData.projects[todoData.currentProjectIndex]) {
+        console.log(todo);
         listToSend.push(todo);
       }
     });
@@ -57,5 +71,6 @@ const todoData = {
 pubsub.subscribe("checkChanged", todoData.checkUncheck);
 pubsub.subscribe("todoEditRequested", todoData.editTodo);
 pubsub.subscribe("projectAddRequested", todoData.addProject);
+pubsub.subscribe("projectChangeInitiated", todoData.setCurrentProject)
 
 export default todoData;

@@ -45,7 +45,7 @@ const mainList = {
 
       const todoLi = document.createElement("li");
       todoLi.classList.add("todo")
-      todoLi.dataset.index = list.indexOf(todo);
+      todoLi.dataset.index = todo.id;
       if (todo.completed) {
         console.log("completed")
         todoLi.classList.add("todo-completed")

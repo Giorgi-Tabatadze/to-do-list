@@ -28,6 +28,10 @@ const sidebar = {
     projects.forEach(project => {
       const li = document.createElement("button")
       li.innerText = project;
+      li.dataset.id = projects.indexOf(project);
+      li.addEventListener("click", () => {
+        pubsub.publish("projectChangeInitiated", li.dataset.id);
+      })
       navUl.appendChild(li);
     });
 

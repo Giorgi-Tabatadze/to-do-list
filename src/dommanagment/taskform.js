@@ -13,6 +13,7 @@ const addTaskForm = {
     const titleInput = document.createElement("input");
     titleInput.setAttribute("type", "text");
     titleInput.setAttribute("id", "title");
+    titleInput.required = true;
 
     const titleLabel = document.createElement("label");
     titleLabel.setAttribute("id", "title");
@@ -40,6 +41,7 @@ const addTaskForm = {
     const dateInput = document.createElement("input");
     dateInput.setAttribute("type", "date");
     dateInput.setAttribute("id", "date");
+    dateInput.required = true;
 
     const dateLabel = document.createElement("label");
     dateLabel.setAttribute("id", "date");
@@ -55,6 +57,7 @@ const addTaskForm = {
     prioritySelect.setAttribute("id", "priority")
     const priorityLabel = document.createElement("label")
     priorityLabel.setAttribute("id", "priority")
+    priorityLabel.innerText = "Priority: "
 
     const lowPriorityOption = document.createElement("option");
     const mediumPriorityOption = document.createElement("option");
@@ -97,6 +100,9 @@ const addTaskForm = {
 
 
     function handleSubmit(event) { 
+      if (titleInput.value === "" || dateInput === "") {
+        return;
+      }
       event.preventDefault(); 
       pubsub.publish("formUsed", form)
 
@@ -111,6 +117,9 @@ const addTaskForm = {
     };
 
     function handleEdit(event) {
+      if (titleInput.value === "" || dateInput === "") {
+        return;
+      }
       event.preventDefault(); 
       pubsub.publish("formUsed", form);
       console.log(prefilledInfo);
