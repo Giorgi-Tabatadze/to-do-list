@@ -3,6 +3,7 @@ import todoData from "./tododata";
 import mainList from "./dommanagment/mainlist";
 import topUi from "./dommanagment/ui";
 import sidebar from "./dommanagment/sidebar";
+import { pubsub } from "./utility/pubsub";
 
 
 
@@ -22,6 +23,8 @@ const domStuff = (() => {
   topUi.render(header);
   mainList.renderContainer(main);
   sidebar.render(aside);
+  pubsub.publish("projectAddRequested", "All");
+
 })();
 
 

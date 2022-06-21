@@ -1,8 +1,7 @@
 import { pubsub } from "../utility/pubsub";
 import removeAllChildNodes from "../utility/removeallchildnodes";
-import todoData from "../tododata";
-import addTaskForm from "./taskform";
 import topUi from "./ui";
+
 
 const mainList = {
   parent: null,
@@ -17,7 +16,6 @@ const mainList = {
 
     pubsub.subscribe("todoListEdited", mainList.renderList);
     pubsub.subscribe("todoListEdited", mainList.removeDetails);
-  
   },
 
   renderList: (list) => {
@@ -26,14 +24,12 @@ const mainList = {
     const listUl = document.createElement("ul");
     mainList.parent.appendChild(listUl);
 
-    
-
     list.forEach(todo => {
 
       const handleEdit = (e) => {
         console.log(todo);
         const todoInfo = {
-          index: list.indexOf(todo),
+          index: todo.id,
           todoObj: todo
         }
         topUi.addForm(todoInfo);
@@ -77,6 +73,7 @@ const mainList = {
       const date = document.createElement("p");
       date.classList.add("todo-date");
       date.innerText = todo.date;
+
       todoLi.appendChild(date);
 
       const editBtn = document.createElement("button")
@@ -85,6 +82,13 @@ const mainList = {
       todoLi.appendChild(editBtn);
       editBtn.addEventListener("click", handleEdit)
 
+      const deleteBtn = document.createElement("button");
+      deleteBtn.classList.add("todo-delete");
+      deleteBtn.innerText = "Delete";
+      deleteBtn.addEventListener("click", () => {
+        pubsub.publish("todoDeleteRequested", todoLi.dataset.index)
+      })
+      todoLi.appendChild(deleteBtn); 
 
       listUl.appendChild(todoLi);
 

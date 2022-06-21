@@ -30,3 +30,11 @@ aside {
   text-decoration: line-through;
   color: rgba(0, 0, 0, 0.563);
 }
+
+.projects-nav li:hover {
+  cursor: pointer;
+  color: red;
+}
+.selected-project {
+  color: red;
+}

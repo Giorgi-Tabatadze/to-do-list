@@ -11,14 +11,12 @@ const sidebar = {
     sidebar.parent = container;
     sidebar.projectsParent = document.createElement("div");
     container.appendChild(sidebar.projectsParent)
-
-    sidebar.renderProjects(todoData.projects);
-
     pubsub.subscribe("projectAdded", sidebar.renderProjects)
     
   },
 
-  renderProjects: (projects) => {
+  renderProjects: (projectData) => {
+    const projects = projectData.projects;
     removeAllChildNodes(sidebar.projectsParent);
 
     const navUl = document.createElement("ul");
@@ -26,12 +24,15 @@ const sidebar = {
     sidebar.projectsParent.appendChild(navUl);
 
     projects.forEach(project => {
-      const li = document.createElement("button")
+      const li = document.createElement("li")
       li.innerText = project;
       li.dataset.id = projects.indexOf(project);
       li.addEventListener("click", () => {
         pubsub.publish("projectChangeInitiated", li.dataset.id);
       })
+      if (li.dataset.id == projectData.selectedIndex){
+        li.classList.add("selected-project")
+      }
       navUl.appendChild(li);
     });
 
