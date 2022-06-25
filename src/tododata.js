@@ -18,7 +18,7 @@ const todoData = {
     todoData.list.forEach(todo => {
       if (todo.id = id) {
         const itemToDelete = todo;
-        todoData.list.splice(todoData.list.indexOf(todo))
+        todoData.list.splice(todoData.list.indexOf(todo), 1);
         todoData.filterList();
       };
     });
@@ -40,18 +40,26 @@ const todoData = {
       console.log(todo);
       console.log(info);
       if (todo.id == info.todoObj.index) {
-        todo = nfo.todoObj;
+        todo = info.todoObj;
       }
     });
     todoData.filterList();
   },
 
   addProject: (project) => {
+    if (todoData.projects.includes(project)) {
+      alert("Project with that name Already exists")
+      return
+    }
     console.log(project);
     todoData.projects.push(project);
     todoData.setCurrentProject(todoData.projects.indexOf(project));
   },
-  
+
+  deleteProject: () => {
+    todoData.projects.splice(todoData.currentProjectIndex, 1);
+    todoData.setCurrentProject(2);
+  },
 
   setCurrentProject: (index) => {
     todoData.currentProjectIndex = parseInt(index);
@@ -97,7 +105,12 @@ const todoData = {
       }
     });
    }
-   pubsub.publish("todoListEdited", listToSend);
+   const dataToSend = {
+    list: listToSend,
+    currentProjectIndex: todoData.currentProjectIndex,
+   };
+
+   pubsub.publish("todoListEdited", dataToSend);
   },
 
   getLocalStorage: () => {
@@ -132,5 +145,6 @@ pubsub.subscribe("todoDeleteRequested", todoData.deleteTodo)
 pubsub.subscribe("projectAdded", todoData.updateStorage);
 pubsub.subscribe("todoListEdited", todoData.updateStorage);
 pubsub.subscribe("pageLoaded", todoData.getLocalStorage);
+pubsub.subscribe("projectDeleteRequested", todoData.deleteProject);
 
 export default todoData;

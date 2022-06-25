@@ -18,11 +18,34 @@ const mainList = {
     pubsub.subscribe("todoListEdited", mainList.removeDetails);
   },
 
-  renderList: (list) => {
+  renderList: (data) => {
     removeAllChildNodes(mainList.parent);
+
+    const list = data.list;
+    const currentProjectIndex = data.currentProjectIndex;
 
     const listUl = document.createElement("ul");
     mainList.parent.appendChild(listUl);
+
+    if (list.length === 0){
+      
+      const emptyMessage = document.createElement("div");
+      emptyMessage.classList.add("empty-message")
+      const text = document.createElement("p");
+      text.innerText = "No Todos to Display"
+      emptyMessage.appendChild(text);
+    
+      if(currentProjectIndex > 2){
+      const deleteProjectBtn = document.createElement("button");
+      deleteProjectBtn.innerText = "Delete This Project";
+      deleteProjectBtn.addEventListener("click", () => {
+        pubsub.publish("projectDeleteRequested");
+      })
+
+      emptyMessage.appendChild(deleteProjectBtn);
+      }
+      mainList.parent.appendChild(emptyMessage);
+    }
 
     list.forEach(todo => {
 
@@ -159,7 +182,9 @@ const mainList = {
   }
   },
 
-  removeDetails: (details) =>{
+  removeDetails: (data) =>{
+    const details = data.list;
+
     if (Array.isArray(details)){
       mainList.detailsRendered = false;
       return

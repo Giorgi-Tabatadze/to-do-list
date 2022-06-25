@@ -1,3 +1,7 @@
+:root {
+  --fa-li-width: 200px;
+}
+
 #content{
   display: grid;
   grid-template-columns: 200px 1fr;
@@ -37,4 +41,19 @@ aside {
 }
 .selected-project {
   color: red;
+}
+
+#icon-3 {
+  color: red;
+}
+
+#icon-4 {
+  color: orange;
+}
+
+#icon-5 {
+  color: yellow;
+}
+#icon-6 {
+  color: green;
 }

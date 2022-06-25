@@ -5,7 +5,11 @@ import topUi from "./dommanagment/ui";
 import sidebar from "./dommanagment/sidebar";
 import { pubsub } from "./utility/pubsub";
 
-
+const head = document.querySelector("head");
+const script = document.createElement("script");
+script.src = "https://kit.fontawesome.com/f7686ece1f.js";
+script.setAttribute("crossorigin", "anonymous")
+head.appendChild(script)
 
 const domStuff = (() => {
   const body = document.querySelector("body");
