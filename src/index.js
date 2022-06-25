@@ -23,8 +23,7 @@ const domStuff = (() => {
   topUi.render(header);
   mainList.renderContainer(main);
   sidebar.render(aside);
-  pubsub.publish("projectAddRequested", "All");
-
+  pubsub.publish("pageLoaded");
 })();
 
 

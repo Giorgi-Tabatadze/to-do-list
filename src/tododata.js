@@ -4,8 +4,8 @@ import {format, startOfWeek, endOfWeek} from 'date-fns';
 
 const todoData = {
   list: [],
-  projects: ["Today", "This Week"],
-  currentProjectIndex: 0, 
+  projects: ["Today", "This Week", "All"],
+  currentProjectIndex: 2, 
 
   addTodo: (toDo) => {
     toDo.project = todoData.projects[todoData.currentProjectIndex];
@@ -45,8 +45,6 @@ const todoData = {
     });
     todoData.filterList();
   },
-
-  
 
   addProject: (project) => {
     console.log(project);
@@ -100,15 +98,39 @@ const todoData = {
     });
    }
    pubsub.publish("todoListEdited", listToSend);
+  },
+
+  getLocalStorage: () => {
+    if (localStorage.getItem("projectsStorage") && localStorage.getItem("todoListStorage")){
+      let projectStorage = JSON.parse(localStorage.getItem("projectsStorage"));
+      let todoListStorage = JSON.parse(localStorage.getItem("todoListStorage"));
+      todoData.list = todoListStorage;
+      todoData.projects = projectStorage
+      todoData.setCurrentProject(2);
+      todoData.filterList();
+    }
+    else {
+      todoData.updateStorage();
+      todoData.setCurrentProject(2);
+      todoData.filterList();
+    } 
+  },
+
+  updateStorage: () => {
+    localStorage.setItem("projectsStorage", JSON.stringify(todoData.projects))
+    localStorage.setItem("todoListStorage", JSON.stringify(todoData.list));
+    
   }
 
 };
-
 
 pubsub.subscribe("checkChanged", todoData.checkUncheck);
 pubsub.subscribe("todoEditRequested", todoData.editTodo);
 pubsub.subscribe("projectAddRequested", todoData.addProject);
 pubsub.subscribe("projectChangeInitiated", todoData.setCurrentProject)
 pubsub.subscribe("todoDeleteRequested", todoData.deleteTodo)
+pubsub.subscribe("projectAdded", todoData.updateStorage);
+pubsub.subscribe("todoListEdited", todoData.updateStorage);
+pubsub.subscribe("pageLoaded", todoData.getLocalStorage);
 
 export default todoData;
