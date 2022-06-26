@@ -30,7 +30,7 @@ const addTaskForm = {
 
     const descriptionLabel = document.createElement("label");
     descriptionLabel.setAttribute("id", "description");
-    descriptionLabel.innerText = "description: "
+    descriptionLabel.innerText = "Description: "
     
     descriptionDiv.appendChild(descriptionLabel);
     descriptionDiv.appendChild(descriptionInput);
@@ -45,7 +45,7 @@ const addTaskForm = {
 
     const dateLabel = document.createElement("label");
     dateLabel.setAttribute("id", "date");
-    dateLabel.innerText = "date: "
+    dateLabel.innerText = "Date: "
 
     dateDiv.appendChild(dateLabel);
     dateDiv.appendChild(dateInput);
@@ -80,22 +80,25 @@ const addTaskForm = {
     //submit
 
     const submitBtn = document.createElement("button");
-    submitBtn.innerText = "Submit";
+    submitBtn.classList.add("submit");
+    submitBtn.innerText = "OK";
 
     //cancel
     const cancelBtn = document.createElement("button")
+    cancelBtn.classList.add("cancel")
     cancelBtn.setAttribute("type", "button");
     cancelBtn.innerText = "X"
     cancelBtn.addEventListener("click", handleCancel);
     
 
     //append to form
+    form.appendChild(cancelBtn);
     form.appendChild(titleDiv);
     form.appendChild(descriptionDiv);
     form.appendChild(dateDiv);
     form.appendChild(priorityDiv);
     form.appendChild(submitBtn);
-    form.appendChild(cancelBtn);
+    
 
 
 
@@ -148,7 +151,9 @@ const addTaskForm = {
     form.addEventListener('submit', handleSubmit);
     };
 
+    
     container.appendChild(form);
+    pubsub.publish("popUpOpened");
   }
 }
 

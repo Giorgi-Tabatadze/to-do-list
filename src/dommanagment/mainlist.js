@@ -136,9 +136,15 @@ const mainList = {
       detailsContainer.classList.add("completed")
     };
 
+    const cancelBtn = document.createElement("button");
+    cancelBtn.innerText = "X";
+    cancelBtn.classList.add("cancel")
+    cancelBtn.addEventListener("click", () => {
+      mainList.removeDetails(detailsContainer);
+    })
+    detailsContainer.appendChild(cancelBtn);
+
     const completed = document.createElement("p");
-
-
     if (todo.completed) {
       completed.innerText = "Completed"
     }
@@ -167,30 +173,24 @@ const mainList = {
     date.innerText = `Date: ${todo.date}`;
     detailsContainer.appendChild(date);
 
-    const cancelBtn = document.createElement("button");
-    cancelBtn.innerText = "X";
-    cancelBtn.addEventListener("click", () => {
-      mainList.removeDetails(detailsContainer);
-      console.log("Details removed");
-    })
-    detailsContainer.appendChild(cancelBtn)
+    
     
 
     mainList.parent.appendChild(detailsContainer);
 
     mainList.detailsRendered = true;
+    pubsub.publish("popUpOpened");
   }
   },
 
   removeDetails: (data) =>{
-    const details = data.list;
-
-    if (Array.isArray(details)){
+    if (Array.isArray(data.list)){
       mainList.detailsRendered = false;
       return
     };
-    mainList.parent.removeChild(details);
+    mainList.parent.removeChild(data);
     mainList.detailsRendered = false;
+    pubsub.publish("popUpClosed");
   }
 
 }

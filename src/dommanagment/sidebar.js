@@ -83,6 +83,7 @@ const sidebar = {
   renderForm: () => {
     if (!sidebar.formGenerated) {
       const projectAddContainter = document.createElement("div");
+      projectAddContainter.classList.add("project-form")
       sidebar.parent.appendChild(projectAddContainter);
 
       const projectName = document.createElement("input")
@@ -90,9 +91,11 @@ const sidebar = {
       projectName.setAttribute("id", "project-input");
       const projectNameLabel = document.createElement("label");
       projectNameLabel.setAttribute("id", "project-input");
+      projectNameLabel.innerText = "New Project Name: "
 
       const submit = document.createElement("button");
-      submit.innerText = "submit";
+      submit.innerText = "OK";
+      submit.classList.add("submit");
       submit.addEventListener("click", () => {
         if(projectName.value.length !== 0){
           pubsub.publish("projectAddRequested", projectName.value);
@@ -102,21 +105,24 @@ const sidebar = {
 
       const cancelBtn = document.createElement("button");
       cancelBtn.innerText = "X";
+      cancelBtn.classList.add("cancel")
       cancelBtn.addEventListener("click", () => {
         sidebar.removeForm(projectAddContainter);
       })
 
+      projectAddContainter.appendChild(cancelBtn);
       projectAddContainter.appendChild(projectNameLabel);
       projectAddContainter.appendChild(projectName);
       projectAddContainter.appendChild(submit);
-      projectAddContainter.appendChild(cancelBtn);
     }
     sidebar.formGenerated = true;
+    pubsub.publish("popUpOpened");
   },
 
   removeForm: (form) => {
     sidebar.parent.removeChild(form);
     sidebar.formGenerated = false;
+    pubsub.publish("popUpClosed");
   },
 
 }
