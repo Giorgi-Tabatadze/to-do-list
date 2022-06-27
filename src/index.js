@@ -5,6 +5,7 @@ import todoData from "./tododata";
 import mainList from "./dommanagment/mainlist";
 import topUi from "./dommanagment/ui";
 import sidebar from "./dommanagment/sidebar";
+import logo from "./dommanagment/logo";
 import { pubsub } from "./utility/pubsub";
 
 
@@ -30,6 +31,7 @@ const domStuff = (() => {
   content.appendChild(header);
   content.appendChild(main);
 
+  logo.render(header);
   topUi.render(header);
   mainList.renderContainer(main);
   sidebar.render(aside);
