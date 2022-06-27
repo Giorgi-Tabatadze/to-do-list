@@ -1,3 +1,4 @@
+import "normalize.css"
 import "./style.css"
 import "./checkbox.scss"
 import todoData from "./tododata";

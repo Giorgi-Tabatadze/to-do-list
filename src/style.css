@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+*{
+  font-family: 'Open Sans', sans-serif;
+}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -12,20 +18,24 @@ body {
   height: 100vh;
   display: grid;
   grid-template-columns: 200px 1fr;
-  grid-template-rows: 50px 1fr;
+  grid-template-rows: 60px 1fr;
   background-color: #F9F9F9;
 }
 
 aside {
   grid-row: 2/3;
+  border-right: 1px solid rgb(0, 0, 0);
 }
 header {
   grid-column: 2/3;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  display: flex;
 }
 header>button{
-  margin-top: 10px;
-  margin-left: 20px;
+  align-self: center;
 }
+
+
 
 
 .todo {
@@ -194,13 +204,11 @@ button:hover{
 }
 
 .empty-message{
-  width: 100%;
-  margin-left: 100px;
-  margin-top: 30px;
+  text-align: center;
 }
 
 .list-container {
   display: flex;
+  justify-content: center;
 }
-
 
