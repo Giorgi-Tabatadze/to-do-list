@@ -1,19 +1,17 @@
-import removeAllChildNodes from "../utility/removeallchildnodes";
 import { pubsub } from "../utility/pubsub";
 import addTaskForm from "./taskform";
 
 const topUi = {
-  //cache container
-  parent : null,
+  // cache container
+  parent: null,
   formGenerated: false,
 
   render: (container) => {
     topUi.parent = container;
 
     const addTaskBtn = document.createElement("button");
-    addTaskBtn.innerText = "+ Add Task"
+    addTaskBtn.innerText = "+ Add Task";
     container.appendChild(addTaskBtn);
-    
 
     addTaskBtn.addEventListener("click", topUi.addForm);
 
@@ -21,15 +19,14 @@ const topUi = {
   },
 
   addForm: (prefilled) => {
-  if (!topUi.formGenerated) {
-    if (prefilled.type !== "click"){
-    addTaskForm.render(topUi.parent, prefilled);
+    if (!topUi.formGenerated) {
+      if (prefilled.type !== "click") {
+        addTaskForm.render(topUi.parent, prefilled);
+      } else {
+        addTaskForm.render(topUi.parent, false);
+      }
+      topUi.formGenerated = true;
     }
-    else{
-    addTaskForm.render(topUi.parent, false);
-    };
-    topUi.formGenerated = true;
-   }
   },
 
   removeForm: (form) => {
@@ -38,11 +35,10 @@ const topUi = {
   },
 
   test: (text) => {
-    text.forEach(element => {
-      console.log(element)
+    text.forEach((element) => {
+      console.log(element);
     });
-  }
+  },
+};
 
-}
-
-export default topUi
+export default topUi;

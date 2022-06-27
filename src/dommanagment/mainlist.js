@@ -2,12 +2,11 @@ import { pubsub } from "../utility/pubsub";
 import removeAllChildNodes from "../utility/removeallchildnodes";
 import topUi from "./ui";
 
-
 const mainList = {
   parent: null,
   detailsRendered: false,
 
-  renderContainer: (container) => {    
+  renderContainer: (container) => {
     const listContainer = document.createElement("div");
     listContainer.setAttribute("id", "list-container");
 
@@ -21,70 +20,68 @@ const mainList = {
   renderList: (data) => {
     removeAllChildNodes(mainList.parent);
 
-    const list = data.list;
-    const currentProjectIndex = data.currentProjectIndex;
+    const { list } = data;
+    const { currentProjectIndex } = data;
 
     const listUl = document.createElement("ul");
     mainList.parent.appendChild(listUl);
 
-    if (list.length === 0){
-      
+    if (list.length === 0) {
       const emptyMessage = document.createElement("div");
-      emptyMessage.classList.add("empty-message")
+      emptyMessage.classList.add("empty-message");
       const text = document.createElement("p");
-      text.innerText = "No Todos to Display"
+      text.innerText = "No Todos to Display";
       emptyMessage.appendChild(text);
-    
-      if(currentProjectIndex > 2){
-      const deleteProjectBtn = document.createElement("button");
-      deleteProjectBtn.innerText = "Delete This Project";
-      deleteProjectBtn.addEventListener("click", () => {
-        pubsub.publish("projectDeleteRequested");
-      })
 
-      emptyMessage.appendChild(deleteProjectBtn);
+      if (currentProjectIndex > 2) {
+        const deleteProjectBtn = document.createElement("button");
+        deleteProjectBtn.innerText = "Delete This Project";
+        deleteProjectBtn.addEventListener("click", () => {
+          pubsub.publish("projectDeleteRequested");
+        });
+
+        emptyMessage.appendChild(deleteProjectBtn);
       }
       mainList.parent.appendChild(emptyMessage);
     }
 
-    list.forEach(todo => {
-
+    list.forEach((todo) => {
       const handleEdit = (e) => {
         console.log(todo);
         const todoInfo = {
           index: todo.id,
-          todoObj: todo
-        }
+          todoObj: todo,
+        };
         topUi.addForm(todoInfo);
       };
 
-      const handleDetails = (e) =>{
+      const handleDetails = (e) => {
         mainList.renderDetails(todo);
-      }
-
-      const todoLi = document.createElement("li");
-      todoLi.classList.add("todo")
-      todoLi.dataset.index = todo.id;
-      if (todo.completed) {
-        console.log("completed")
-        todoLi.classList.add("todo-completed")
       };
 
+      const todoLi = document.createElement("li");
+      todoLi.classList.add("todo");
+      todoLi.dataset.index = todo.id;
+      if (todo.completed) {
+        console.log("completed");
+        todoLi.classList.add("todo-completed");
+      }
+
       const check = document.createElement("input");
-      check.classList.add("todo-check")
+      check.classList.add("todo-check");
       check.setAttribute("type", "checkbox");
       check.checked = todo.completed;
       check.addEventListener("change", mainList.handleCheck);
-      todoLi.appendChild(check)
+      todoLi.appendChild(check);
 
       const title = document.createElement("p");
       title.classList.add("todo-title");
       title.innerText = todo.title;
-      todoLi.appendChild(title)
+      todoLi.appendChild(title);
 
       const priority = document.createElement("p");
       priority.classList.add("todo-priority");
-      priority.innerText = `Priority: ${todo.priority}`
+      priority.innerText = `Priority: ${todo.priority}`;
       todoLi.appendChild(priority);
 
       const detailsBtn = document.createElement("button");
@@ -99,100 +96,94 @@ const mainList = {
 
       todoLi.appendChild(date);
 
-      const editBtn = document.createElement("button")
+      const editBtn = document.createElement("button");
       editBtn.classList.add("todo-edit");
       editBtn.innerText = "Edit";
       todoLi.appendChild(editBtn);
-      editBtn.addEventListener("click", handleEdit)
+      editBtn.addEventListener("click", handleEdit);
 
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("todo-delete");
       deleteBtn.innerText = "Delete";
       deleteBtn.addEventListener("click", () => {
-        pubsub.publish("todoDeleteRequested", todoLi.dataset.index)
-      })
-      todoLi.appendChild(deleteBtn); 
+        pubsub.publish("todoDeleteRequested", todoLi.dataset.index);
+      });
+      todoLi.appendChild(deleteBtn);
 
       listUl.appendChild(todoLi);
-
     });
   },
 
   handleCheck: (e) => {
-    console.log("received")
+    console.log("received");
     const info = {
-      index : e.target.parentNode.dataset.index,
+      index: e.target.parentNode.dataset.index,
       value: e.target.checked,
-    }
+    };
 
-    pubsub.publish("checkChanged", info)
+    pubsub.publish("checkChanged", info);
   },
 
   renderDetails: (todo) => {
-    if (!mainList.detailsRendered){
-    const detailsContainer = document.createElement("div");
-    detailsContainer.classList.add("details-container")
-    if (todo.completed){
-      detailsContainer.classList.add("completed")
-    };
+    if (!mainList.detailsRendered) {
+      const detailsContainer = document.createElement("div");
+      detailsContainer.classList.add("details-container");
+      if (todo.completed) {
+        detailsContainer.classList.add("completed");
+      }
 
-    const cancelBtn = document.createElement("button");
-    cancelBtn.innerText = "X";
-    cancelBtn.classList.add("cancel")
-    cancelBtn.addEventListener("click", () => {
-      mainList.removeDetails(detailsContainer);
-    })
-    detailsContainer.appendChild(cancelBtn);
+      const cancelBtn = document.createElement("button");
+      cancelBtn.innerText = "X";
+      cancelBtn.classList.add("cancel");
+      cancelBtn.addEventListener("click", () => {
+        mainList.removeDetails(detailsContainer);
+      });
+      detailsContainer.appendChild(cancelBtn);
 
-    const completed = document.createElement("p");
-    if (todo.completed) {
-      completed.innerText = "Completed"
+      const completed = document.createElement("p");
+      if (todo.completed) {
+        completed.innerText = "Completed";
+      } else {
+        completed.innerText = "Not Completed";
+      }
+      detailsContainer.appendChild(completed);
+
+      const title = document.createElement("p");
+      title.classList.add("details-title");
+      title.innerText = `Title: ${todo.title}`;
+      detailsContainer.appendChild(title);
+
+      const description = document.createElement("p");
+      description.classList.add("details-text");
+      description.innerText = `Description: ${todo.description}`;
+      detailsContainer.appendChild(description);
+
+      const priority = document.createElement("p");
+      priority.classList.add("details-priority");
+      priority.innerText = `Priority: ${todo.priority}`;
+      detailsContainer.appendChild(priority);
+
+      const date = document.createElement("p");
+      date.classList.add("details-date");
+      date.innerText = `Date: ${todo.date}`;
+      detailsContainer.appendChild(date);
+
+      mainList.parent.appendChild(detailsContainer);
+
+      mainList.detailsRendered = true;
+      pubsub.publish("popUpOpened");
     }
-    else {
-      completed.innerText = "Not Completed"
-    }
-    detailsContainer.appendChild(completed)
-
-    const title = document.createElement("p");
-    title.classList.add("details-title");
-    title.innerText = `Title: ${todo.title}`;
-    detailsContainer.appendChild(title);
-
-    const description = document.createElement("p");
-    description.classList.add("details-text");
-    description.innerText = `Description: ${todo.description}`;
-    detailsContainer.appendChild(description);
-
-    const priority = document.createElement("p");
-    priority.classList.add("details-priority"); 
-    priority.innerText = `Priority: ${todo.priority}`
-    detailsContainer.appendChild(priority);
-
-    const date = document.createElement("p");
-    date.classList.add("details-date");
-    date.innerText = `Date: ${todo.date}`;
-    detailsContainer.appendChild(date);
-
-    
-    
-
-    mainList.parent.appendChild(detailsContainer);
-
-    mainList.detailsRendered = true;
-    pubsub.publish("popUpOpened");
-  }
   },
 
-  removeDetails: (data) =>{
-    if (Array.isArray(data.list)){
+  removeDetails: (data) => {
+    if (Array.isArray(data.list)) {
       mainList.detailsRendered = false;
-      return
-    };
+      return;
+    }
     mainList.parent.removeChild(data);
     mainList.detailsRendered = false;
     pubsub.publish("popUpClosed");
-  }
-
-}
+  },
+};
 
 export default mainList;

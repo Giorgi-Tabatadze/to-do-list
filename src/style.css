@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 
-*{
-  font-family: 'Open Sans', sans-serif;
+* {
+  font-family: "Open Sans", sans-serif;
 }
 
 body {
@@ -14,20 +14,20 @@ body {
   --fa-li-width: 200px;
 }
 
-#logo{
+#logo {
   justify-self: center;
 }
-#logo:hover{
+#logo:hover {
   cursor: pointer;
   text-decoration: line-through;
 }
 
-#content{
+#content {
   height: 100vh;
   display: grid;
   grid-template-columns: 200px 1fr;
   grid-template-rows: 60px 1fr;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
 }
 
 aside {
@@ -41,14 +41,11 @@ header {
   grid-template-columns: 200px 1fr;
   align-content: center;
 }
-header>button{
+header > button {
   align-self: center;
   justify-self: center;
   width: 50%;
 }
-
-
-
 
 .todo {
   list-style-type: none;
@@ -68,7 +65,7 @@ header>button{
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   color: black;
   z-index: 2;
   border-radius: 20px;
@@ -82,31 +79,28 @@ header>button{
   gap: 5px;
 }
 
-
-
-.todo-completed>p{
+.todo-completed > p {
   text-decoration: line-through;
   color: rgba(0, 0, 0, 0.563);
 }
 
-.projects-nav>li{
+.projects-nav > li {
   margin-bottom: 10px;
 }
 
 .projects-nav li:hover {
   cursor: pointer;
-  background-color: #FFD52E;
+  background-color: #ffd52e;
 }
 
-.projects-nav>li>span{
+.projects-nav > li > span {
   margin-left: 6px;
 }
 
 .selected-project {
-  background-color: #FFD52E;
+  background-color: #ffd52e;
   border: 1px solid black;
 }
-
 
 #icon-3 {
   color: red;
@@ -122,32 +116,31 @@ header>button{
 #icon-6 {
   color: green;
 }
-#icon-7{
+#icon-7 {
   color: blue;
 }
-#icon-8{
-  color:purple;
+#icon-8 {
+  color: purple;
 }
-#icon-9{
+#icon-9 {
   color: pink;
 }
-#icon-10{
+#icon-10 {
   color: gray;
 }
 
-
 .disableDiv {
-  position:fixed;
-  left:0;
-  top:0;
-  width:100vw;
-  height:100vh;
-  background-color:#000;
-  opacity:0.5;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0.5;
   z-index: 1;
 }
 
-.details-container{
+.details-container {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -156,59 +149,59 @@ header>button{
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   color: black;
   z-index: 2;
   border-radius: 20px;
 }
 
-.details-container p{
+.details-container p {
   width: 100%;
   border-bottom: 1px dashed rgb(66, 65, 65);
   text-align: center;
   padding-bottom: 3px;
 }
 
-.cancel{
+.cancel {
   align-self: flex-end;
   width: 100%;
   height: 30px;
   text-align: end;
   padding-right: 15px;
-  background-color: #FFD52E;
+  background-color: #ffd52e;
   border: none;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
-.cancel{
+.cancel {
   cursor: pointer;
 }
 
-button{
+button {
   border: none;
   border: 0.5px dashed black;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   padding: 5px 10px;
 }
-button:hover{
+button:hover {
   cursor: pointer;
-  background-color: #FFD52E; 
+  background-color: #ffd52e;
 }
 
 .submit {
   margin: 20px;
   border: none;
   border: 0.5px dashed black;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   padding: 5px 10px;
 }
 
-.submit:hover{
+.submit:hover {
   cursor: pointer;
-  background-color: #FFD52E;
+  background-color: #ffd52e;
 }
 
-.project-form{
+.project-form {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -217,18 +210,19 @@ button:hover{
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   color: black;
   z-index: 2;
   border-radius: 20px;
 }
 
-.project-form>input, .project-form>label {
+.project-form > input,
+.project-form > label {
   width: 50%;
   margin-top: 5px;
 }
 
-.empty-message{
+.empty-message {
   text-align: center;
 }
 
@@ -238,5 +232,5 @@ button:hover{
 }
 
 input[type="checkbox"] {
-  accent-color: #FFD52E;
+  accent-color: #ffd52e;
 }
